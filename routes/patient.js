@@ -39,9 +39,9 @@ router.post("/addPatient", function (req, res) {
 })
 
 router.post("/searchPatient",function(req,res,next){
-    const NIC  = req.body.NIC;
+    const email  = req.body.email;
 
-    database.searchPatient(NIC,function(err,result){
+    database.searchPatient(email,function(err,result){
         console.log(result);
         if(err){
             console.log(err);

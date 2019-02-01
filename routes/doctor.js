@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/jwt');
 const database = require('../databaseHandle/connectDatabase');
+var randomstring = require("randomstring");
 
 router.post("/addDoctor", function (req, res) {
     console.log(req.body,"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
@@ -85,9 +86,27 @@ router.post('/appScheduling',function(req,res){
             
         }else{
             console.log(result[0])
-            //const Id = result[0].doctorRegNo;
-           // console.log(Id);
-            res.json({id:result})
+            const Id = result[0].doctorRegNo;
+            console.log(result)
+            var appScheduleId  = randomstring.generate(7);
+            const appShedule = [
+                appScheduleId,
+                req.body.noOfAppointments,
+                req.body.dateTimeIn,
+                req.body.dateTimeOut,
+                req.body.date,
+                Id,
+            ]
+            console.log(appShedule);
+            database.addAppSchedule(appShedule,function(err,result){
+                if(err){
+                    console.log(err);
+                    res.json({success : false})
+                }else{
+                    res.json({success : true})
+                }
+            })
+
         }
     })
 })
