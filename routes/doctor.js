@@ -6,7 +6,7 @@ const config = require('../config/jwt');
 const database = require('../databaseHandle/connectDatabase');
 
 router.post("/addDoctor", function (req, res) {
-
+    console.log(req.body,"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
     const doctorData = [
         req.body.doctorRegNo,
         req.body.doctorField,
@@ -30,16 +30,54 @@ router.post("/addDoctor", function (req, res) {
     });
 })
 
-router.post('/viewdoctor',function(req,res){
-    console.log(req)
-    database.doctorDetails(req,function(err,result){
-
+router.get('/viewdoctor',function(req,res){
+    console.log("nbbjhbhub");
+    database.doctorDetails(function(err,result){
         if(err){
             console.log(err)
         }else{
-            res.json(result);
+            res.json({ success: true, msg: result });
         }
     })
 })
+//find all doctors and by field
+router.get('/viewdoctor/:field',function(req,res){
+    var field = req.params.field
+    console.log(field,"bbbbbbb")
+    if(field){
+        database.doctorDetailsByField(field,function(err,result){
+            if(err){
+                console.log(err)
+            }else{
+                res.json({ success: true, msg: result });
+            }
+        })
+
+    }else{
+        database.doctorDetails(function(err,result){
+            if(err){
+                console.log(err)
+            }else{
+                res.json({ success: true, msg: result });
+            }
+        })
+    }
+
+})
+
+router.post('/profile',function(req,res){
+      console.log(req.body.email,"mnjnjh")
+    database.doctorProfile(req.body.email,function(err,result){
+        if(err){
+            console.log(err)
+        }else{
+            console.log(result)
+            res.json({success: true, msg: result})
+        }
+    })
+})
+
+
+
 
 module.exports = router;

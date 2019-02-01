@@ -52,4 +52,15 @@ router.post("/searchPatient",function(req,res,next){
     })
 })
 
+router.post("/profile",function(req,res){
+
+    database.patientProfile(req.body.email,function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+            res.json({success: true, msg: result})
+        }
+    })
+})
+
 module.exports = router;

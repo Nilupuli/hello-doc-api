@@ -76,12 +76,12 @@ module.exports.addRole = function(data ,callback){
 }
 
 module.exports.addUsers = function(data , callback){
-    console.log(data[5],"qwertyuiertyuiop");
+    //console.log(data[5],"qwertyuiertyuiop");
 
     bcrypt.genSalt(10,function(err,salt){
         bcrypt.hash(data[5],salt,function(err,hash){
             if(err){
-                throw err;
+                console.log(err)
             }
             data[5] = hash;
             con.query(tableSchema.tables.users.adduser,[[data]],callback);
@@ -174,10 +174,26 @@ module.exports.addMlt = function(data , callback){
     con.query(tableSchema.tables.patient.getUser+ mysql.escape(NIC),callback);
    }
 
-   module.exports.doctorDetails = function(id,callback){
-       console.log(email,"sdvsdv");
-       con.query(tableSchema.tables.doctor.getUser + mysql.escape(id),callback)
+   module.exports.doctorDetails = function(callback){
+    console.log("mkmkkjkjkjkjkjkjkjk");
+       con.query(tableSchema.tables.doctor.getUser,callback)
    }
+
+   module.exports.doctorDetailsByField = function(field,callback){
+       con.query(tableSchema.tables.doctor.getUserByField + mysql.escape(field),callback)
+   }
+
+   module.exports.doctorProfile = function(email,callback){
+       console.log(email)
+       con.query(tableSchema.tables.doctor.profile + mysql.escape(email),callback)
+   }
+
+   module.exports.patientProfile = function(email,callback){
+    console.log(email)
+    con.query(tableSchema.tables.patient.profile + mysql.escape(email),callback)
+}
+
+
 
 
 

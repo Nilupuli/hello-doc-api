@@ -25,6 +25,7 @@ router.post("/addUsers", function (req, res) {
         req.body.roleId
     ]
 
+    console.log(usersData,"ppppppppppppppppp")
     database.addUsers(usersData, function (err, result) {
         console.log(usersData,"ppppppppppppppppp")
         if (err) {

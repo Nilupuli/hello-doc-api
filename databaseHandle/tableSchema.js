@@ -54,7 +54,8 @@ const tables = {
             "CONSTRAINT pk_patient PRIMARY KEY (patientId)," +
             "CONSTRAINT fk_patient_users FOREIGN KEY (NIC) REFERENCES users(NIC) ON DELETE CASCADE)",
         adduser: "INSERT INTO patient(patientId,dob,occupation,bloodType,maritalState,height,weight,NIC)VALUE ?",
-        getUser: "SELECT * FROM patient where NIC ="
+        getUser: "SELECT * FROM patient where NIC =",
+        profile: "SELECT * FROM patient p JOIN users u ON p.NIC = u.NIC where email ="
 
     },
 
@@ -69,7 +70,9 @@ const tables = {
             "CONSTRAINT fk_doctor_users FOREIGN KEY (NIC) REFERENCES users(NIC) ON DELETE CASCADE )",
 
         adduser: "INSERT INTO doctor(doctorRegNo,doctorField,doctorDesignation,workAddress,NIC)VALUE ?",
-        getUser: "SELECT * FROM users u JOIN doctor d ON u.NIC = d.NIC where email = "
+        getUser: "SELECT * FROM users u JOIN doctor d ON u.NIC = d.NIC",
+        getUserByField : "SELECT * FROM users u JOIN doctor d ON u.NIC = d.NIC WHERE doctorField = ",
+        profile : "SELECT * FROM users u JOIN doctor d ON u.NIC = d.NIC WHERE email =  "
 
     },
 
