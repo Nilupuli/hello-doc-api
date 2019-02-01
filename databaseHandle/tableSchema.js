@@ -102,7 +102,7 @@ const tables = {
             " CONSTRAINT fk_patientbasichealthinfo_patient FOREIGN KEY (patientId) REFERENCES patient(patientId) ON DELETE CASCADE )",
 
         adduser: "INSERT INTO patientbasichealthinfo(patientId,currentDate,cholestorol,socialDisease,allergy,bloodPresure,bloodSugar) VALUE ?",
-        getUser: "SELECT * FROM patientbasichealthinfo where ?"
+        getData: "SELECT * FROM patientbasichealthinfo where patientId = "
 
     },
 

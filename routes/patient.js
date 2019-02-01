@@ -89,7 +89,7 @@ router.post("/addpatientbasichealthinfo",function(req,res){
 
             database.addPatientBasichealthInfo(basicInfo,function(err,result){
                 if(err){
-                    console.log(err)%
+                    console.log(err)
                     res.json({success: false})
                 }else{
                     res.json({success: true})
@@ -107,5 +107,34 @@ router.post("/addpatientbasichealthinfo",function(req,res){
 
     // database.addPatientbasichealthinfo()
 })
+
+
+router.post("/viewbasichealthinfo",function(req,res){
+    const email = req.body.email;
+    console.log(email,"bnxcbxcb")
+    console.log(req.body,"bnxcbxcb")
+    database.patientProfile(email,function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+          const Id = result[0].patientId;
+           console.log(Id);
+
+           database.viewPatientBasicInfo(Id,function(err,result){
+               if(err){
+                   console.log(err);
+                   res.json({success: false})
+               }else{
+                res.json({success: true,data:result})
+               }
+
+           })
+        }
+
+    })
+
+})
+
+
 
 module.exports = router;

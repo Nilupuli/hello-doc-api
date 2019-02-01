@@ -106,9 +106,7 @@ module.exports.addMlt = function(data , callback){
     con.query(tableSchema.tables.frontdesk.adduser,[[data]],callback)
    }
 
-   module.exports.addPatientBasichealthInfo = function(data , callback){
-    con.query(tableSchema.tables.patientbasichealthinfo.adduser,[[data]],callback)
-   }
+
    
    module.exports.addLabreport = function(data , callback){
     con.query(tableSchema.tables.labreport.adduser,[[data]],callback)
@@ -191,6 +189,14 @@ module.exports.addMlt = function(data , callback){
    module.exports.patientProfile = function(email,callback){
     console.log(email)
     con.query(tableSchema.tables.patient.profile + mysql.escape(email),callback)
+}
+
+module.exports.addPatientBasichealthInfo = function(data , callback){
+    con.query(tableSchema.tables.patientbasichealthinfo.adduser,[[data]],callback)
+   }
+
+module.exports.viewPatientBasicInfo = function(data,callback){
+    con.query(tableSchema.tables.patientbasichealthinfo.getData + mysql.escape(data),callback)
 }
 
 

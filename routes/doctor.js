@@ -77,6 +77,21 @@ router.post('/profile',function(req,res){
     })
 })
 
+router.post('/appScheduling',function(req,res){
+    console.log(req.body.email,"sdasdasdasdasdas")
+    database.doctorProfile(req.body.email,function(err,result){
+        if(err){
+            console.log(err);
+            
+        }else{
+            console.log(result[0])
+            //const Id = result[0].doctorRegNo;
+           // console.log(Id);
+            res.json({id:result})
+        }
+    })
+})
+
 
 
 
