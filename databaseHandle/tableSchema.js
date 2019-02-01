@@ -56,7 +56,7 @@ const tables = {
         adduser: "INSERT INTO patient(patientId,dob,occupation,bloodType,maritalState,height,weight,NIC)VALUE ?",
         getUser: "SELECT * FROM patient where NIC =",
         profile: "SELECT * FROM patient p JOIN users u ON p.NIC = u.NIC where email ="
-
+        
     },
 
     doctor: {
@@ -101,7 +101,7 @@ const tables = {
             " CONSTRAINT pk_patientbasichealthinfo PRIMARY KEY ()," +
             " CONSTRAINT fk_patientbasichealthinfo_patient FOREIGN KEY (patientId) REFERENCES patient(patientId) ON DELETE CASCADE )",
 
-        adduser: "INSERT INTO patientbasichealthinfo( patientId,currentDate,cholestorol,socialDisease,allergy,bloodPresure,bloodSugar)VALUE ?",
+        adduser: "INSERT INTO patientbasichealthinfo(patientId,currentDate,cholestorol,socialDisease,allergy,bloodPresure,bloodSugar) VALUE ?",
         getUser: "SELECT * FROM patientbasichealthinfo where ?"
 
     },

@@ -63,4 +63,49 @@ router.post("/profile",function(req,res){
     })
 })
 
+
+router.post("/addpatientbasichealthinfo",function(req,res){
+
+    const email = req.body.email;
+    console.log(email,"bnxcbxcb")
+    database.patientProfile(email,function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+          const Id = result[0].patientId;
+           console.log(Id);
+
+           const basicInfo = [
+                Id,
+                req.body.currentDate,
+                req.body.cholestorol,
+                req.body.socialDisease,
+                req.body.allergy,
+                req.body.bloodPresure,
+                req.body.bloodSugar
+           ]
+
+            console.log(basicInfo,"dssdasdas")
+
+            database.addPatientBasichealthInfo(basicInfo,function(err,result){
+                if(err){
+                    console.log(err)%
+                    res.json({success: false})
+                }else{
+                    res.json({success: true})
+                }
+            })
+          
+            
+        }
+    })
+
+    // const healthInfo = {
+
+
+    // }
+
+    // database.addPatientbasichealthinfo()
+})
+
 module.exports = router;

@@ -136,6 +136,7 @@ router.post("/login",function(req,res,next){
                        // console.log(user[0].password,"dfghjkkkkkkkkkkkkkkkkkkkk");
                        //const token = jwt.sign(toObject())
                       // console.log(roleid);
+                      
                        database.selectRole(roleid,function(err,roleid){
                            console.log(roleid);
                         const token = jwt.sign(toObject(user),config.secret,{
