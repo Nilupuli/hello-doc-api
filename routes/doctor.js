@@ -92,10 +92,11 @@ router.post('/appScheduling',function(req,res){
             const appShedule = [
                 appScheduleId,
                 req.body.noOfAppointments,
-                req.body.dateTimeIn,
-                req.body.dateTimeOut,
-                req.body.date,
+                req.body.timeIn,
+                req.body.timeOut,
                 Id,
+                req.body.date,
+                
             ]
             console.log(appShedule);
             database.addAppSchedule(appShedule,function(err,result){
@@ -111,6 +112,58 @@ router.post('/appScheduling',function(req,res){
     })
 })
 
+router.get('/ViewSheduling/:doctorRegNo/:date',function(req,res){
+    var doctorRegNo = req.params.doctorRegNo;
+    var date = req.params.date;
+    //console.log(doctorRegNo,date);
+
+    database.ViewSheduling(doctorRegNo,date,function(err,result){
+     if(err){
+         console.log(err);
+     }else{
+         res.send({data:result})
+     }
+    })
+
+})
+
+router.post('/addprescription',function(req,res){
+    console.log(req.body.email,"sdasdasdasdasdas")
+    database.doctorProfile(req.body.email,function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+            console.log(result[0])
+            const Id = result[0].doctorRegNo;
+            console.log(result);
+            var prescriptionId  = randomstring.generate(7);
+
+            const prescription = [
+                prescriptionId,
+                req.body.IssueDate,
+                req.body.expireDate,
+                req.body.medicineName,
+                Id,
+                req.body.diseaseDetailld,
+                req.body.recommendedTest,
+                req.body.medicineDosage,
+                req.body.medicineQty,
+                req.body.medicineNo
+            ]
+
+            console.log(prescription);
+            database.addPrescription(prescription,function(err,result){
+                if(err){
+                    console.log(err)
+                    res.json({success : false})
+                }else{
+                    res.json({success : true})
+                }
+            })
+        }
+    })
+
+})
 
 
 

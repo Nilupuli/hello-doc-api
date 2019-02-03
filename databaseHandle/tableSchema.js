@@ -158,7 +158,7 @@ const tables = {
             "CONSTRAINT fk_prescription_diseasedetail FOREIGN KEY(diseaseDetailId) REFERENCES diseasedetail(diseaseDetailId) ON DELETE CASCADE,"+
            "CONSTRAINT fk_prescription_medicine FOREIGN KEY(medicineNo) REFERENCES  medicine(medicineNo) ON DELETE CASCADE)",
 
-            addUser:"INSERT INTO prescription( prescriptionId,issueDate,expireDate,madicineName,doctorRegNo,diseaseDetailId,recommandedTest,medicineDosage,medicineQty,medicineNo)VALUE?",
+            addprescription :"INSERT INTO prescription( prescriptionId,issueDate,expireDate,madicineName,doctorRegNo,diseaseDetailId,recommandedTest,medicineDosage,medicineQty,medicineNo)VALUE?",
             getUser: "SELECT * FROM prescription where ?"
 
            },
@@ -193,8 +193,9 @@ const tables = {
             " CONSTRAINT pk_appSchedule PRIMARY KEY (appScheduleId)" +
             "CONSTRAINT fk_appSchedule_doctor FOREIGN KEY(doctorRegNo) REFERENCES doctor(doctorRegNo) ON DELETE CASCADE)",
 
-        adduser: " INSERT INTO appSchedule(appScheduleId,noOfAppointments,timeIn,timeOut,doctorRegNo,date)VALUE ?",
-        getUser: "SELECT * FROM appSchedule where ?"
+            addAppSchedule: " INSERT INTO appSchedule(appScheduleId,noOfAppointments,timeIn,timeOut,doctorRegNo,date)VALUE ?",
+            getUser: "SELECT * FROM appSchedule where ?",
+            viewScheduling:"SELECT * FROM doctor d,appSchedule as WHERE d.doctorRegNo = as.doctorRegNo AND d.doctorRegNo = "
 
     },
     

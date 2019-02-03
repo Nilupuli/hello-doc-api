@@ -121,11 +121,11 @@ module.exports.addMlt = function(data , callback){
    }
 
    module.exports.addPrescription = function(data , callback){
-    con.query(tableSchema.tables.prescription.adduser,[[data]],callback)
+    con.query(tableSchema.tables.prescription.addprescription,[[data]],callback)
    }
 
    module.exports.addAppSchedule = function(data , callback){
-    con.query(tableSchema.tables.appSchedule.adduser,[[data]],callback)
+    con.query(tableSchema.tables.appSchedule.addAppSchedule,[[data]],callback)
    }
 
    module.exports.addMedicine = function(data , callback){
@@ -197,6 +197,11 @@ module.exports.addPatientBasichealthInfo = function(data , callback){
 
 module.exports.viewPatientBasicInfo = function(data,callback){
     con.query(tableSchema.tables.patientbasichealthinfo.getData + mysql.escape(data),callback)
+}
+
+module.exports.ViewSheduling = function(doctorRegNo,date,callback){
+    console.log(doctorRegNo,date,"qqqqqqqqq")
+    con.query(tableSchema.tables.appSchedule.viewScheduling + mysql.escape(doctorRegNo)+'AND as.date='+mysql.escape(date),callback)
 }
 
 
