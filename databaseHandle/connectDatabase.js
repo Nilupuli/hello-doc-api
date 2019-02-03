@@ -168,7 +168,7 @@ module.exports.addMlt = function(data , callback){
    }
 
    module.exports.searchPatient = function(email,callback){
-    console.log(NIC,"mkmkkjkjkjkjkjkjkjk");
+    console.log(email,"mkmkkjkjkjkjkjkjkjk");
     con.query(tableSchema.tables.patient.getUser+ mysql.escape(email),callback);
    }
 
