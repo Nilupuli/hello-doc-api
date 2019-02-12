@@ -25,7 +25,25 @@ router.post("/addMlt",function(req,res){
             res.json({success : true , msg : "Mlt added"});
         }
     });
+
+    
 })
 
+router.post("/ViewMLTProfile",function(req,res){
+    const email = req.body.email;
+    console.log(email,"xxcxx")
+    //console.log(req.body,"xxcxx")
+    database.ViewMLTProfile(email,function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+          const Id = result[0].patientId;
+           console.log(Id);
+           res.json({status : 200,msg:result})
+        }
+
+    })
+
+})
 module.exports = router;
 

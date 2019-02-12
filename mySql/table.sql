@@ -3,7 +3,7 @@ CREATE TABLE role(
     roleName	varchar(20),
     CONSTRAINT pk_role PRIMARY KEY (roleId)
 )
-INSERT INTO role (roleId,roleName) VALUE ("001","doctor");
+INSERT INTO role (roleId,roleName) VALUES ("001", "doctor");
 
 CREATE TABLE users (
     NIC VARCHAR(15),
@@ -19,7 +19,7 @@ CREATE TABLE users (
     CONSTRAINT pk_users PRIMARY KEY (NIC),
     CONSTRAINT fk_users_role FOREIGN KEY (roleId) REFERENCES role(roleId) ON DELETE CASCADE
  )
- INSERT INTO users(NIC,firstName,lastName,contactNo,email,password,addNo,addStreet,addCity,roleId)VALUE("958612184V","Chandi","Premarathne","0713067517","chansayumdi@gmail.com","123","E30","Jaya Mawatha","Moratuwa","002")
+ INSERT INTO users(NIC,firstName,lastName,contactNo,email,password,addNo,addStreet,addCity,roleId)VALUES("958612184V","Chandi","Premarathne","0713067517","chansayumdi@gmail.com","123","E30","Jaya Mawatha","Moratuwa","002")
 
  CREATE TABLE mlt (
     mltRegNo varchar(10),
@@ -27,7 +27,7 @@ CREATE TABLE users (
     CONSTRAINT pk_mlt PRIMARY KEY (mltRegNo),
     CONSTRAINT fk_mlt_users FOREIGN KEY (NIC) REFERENCES users(NIC) ON DELETE CASCADE
  )
- INSERT INTO mlt(NIC,mltRegNo)VALUE("mlt01","966440708v");
+ INSERT INTO mlt(NIC,mltRegNo)VALUES("mlt01","966440708v");
 
  CREATE TABLE patient (
     patientId VARCHAR(15),
@@ -41,7 +41,7 @@ CREATE TABLE users (
     CONSTRAINT pk_patient PRIMARY KEY (patientId),
     CONSTRAINT fk_patient_users FOREIGN KEY (NIC) REFERENCES users(NIC) ON DELETE CASCADE
  )
- INSERT INTO patient(patientId,dob,occupation,bloodType,maritalState,height,weight,NIC)VALUE("001","1995/12/26","Student","B+","1","135.25","57","2545124458V");
+ INSERT INTO patient(patientId,dob,occupation,bloodType,maritalState,height,weight,NIC)VALUES("001","1995/12/26","Student","B+","1","135.25","57","2545124458V");
 
 
 CREATE TABLE doctor (
@@ -53,7 +53,7 @@ doctorRegNo VARCHAR(15) ,
     CONSTRAINT pk_doctor PRIMARY KEY (doctorRegNo),
     CONSTRAINT fk_doctor_users FOREIGN KEY (NIC) REFERENCES users(NIC) ON DELETE CASCADE
  )
- INSERT INTO doctor(doctorRegNo,doctorField,doctorDesignation,workAddress,NIC)VALUE("001","1995/12/26","Student","B+","1","135.25","57","958612184V");
+ INSERT INTO doctor(doctorRegNo,doctorField,doctorDesignation,workAddress,NIC)VALUES("001","1995/12/26","Student","B+","1","135.25","57","958612184V");
 
  CREATE TABLE frontdesk(
     NIC varchar(15),
@@ -61,7 +61,7 @@ doctorRegNo VARCHAR(15) ,
     CONSTRAINT pk_frontdesk PRIMARY KEY (frontDeskId),
     CONSTRAINT fk_frontdesk_users FOREIGN KEY (NIC) REFERENCES users(NIC) ON DELETE CASCADE
   )
-  INSERT INTO frontdesk(NIC,frontDeskId)VALUE("958612184V","00F1");
+  INSERT INTO frontdesk(NIC,frontDeskId)VALUES("958612184V","00F1");
 
   CREATE TABLE patientbasichealthinfo(
        patientId VARCHAR(15),
@@ -71,10 +71,10 @@ doctorRegNo VARCHAR(15) ,
        allergy VARCHAR(75),
        bloodPresure DECIMAL(5,2),
        bloodSugar DECIMAL(5,2),
-       CONSTRAINT pk_patientbasichealthinfo PRIMARY KEY(currentDate)
+       CONSTRAINT pk_patientbasichealthinfo PRIMARY KEY(currentDate),
        CONSTRAINT fk_patientbasichealthinfo_patient FOREIGN KEY (patientId) REFERENCES patient(patientId) ON DELETE CASCADE
   )
-  INSERT INTO patientbasichealthinfo( patientId,currentDate,cholestorol,socialDisease,allergy,bloodPresure,bloodSugar)VALUE("","");
+  INSERT INTO patientbasichealthinfo( patientId,currentDate,cholestorol,socialDisease,allergy,bloodPresure,bloodSugar)VALUES(" "," "," "," "," "," "," ");
 
   CREATE TABLE labreport(
       reportNo INT(100),
@@ -82,7 +82,7 @@ doctorRegNo VARCHAR(15) ,
       pdfLocation VARCHAR(100),
       CONSTRAINT pk_labreport PRIMARY KEY(reportNo)
   )
-  INSERT INTO labreport(reportNo,reportName,pdfLocation)VALUE(" "," ");
+  INSERT INTO labreport(reportNo,reportName,pdfLocation)VALUES(" "," ");
 
   CREATE TABLE diseasedetail(
      diseaseDetailId VARCHAR(100),
@@ -92,7 +92,7 @@ doctorRegNo VARCHAR(15) ,
      CONSTRAINT pk_diseasedetail PRIMARY KEY(diseaseDetailId)
 
   )
-  INSERT INTO diseasedetail( diseaseDetailId,diseaseDescription,reportAssign,diseaseDate)VALUE(" "," ")
+  INSERT INTO diseasedetail( diseaseDetailId,diseaseDescription,reportAssign,diseaseDate)VALUES(" "," ")
 
    CREATE TABLE prescription (
     prescriptionId VARCHAR(15), 
@@ -109,10 +109,11 @@ doctorRegNo VARCHAR(15) ,
     CONSTRAINT fk_prescription_diseasedetail FOREIGN KEY(diseaseDetailId) REFERENCES diseasedetail(diseaseDetailId) ON DELETE CASCADE,
    CONSTRAINT fk_prescription_medicine FOREIGN KEY(medicineNo) REFERENCES  medicine(medicineNo) ON DELETE CASCADE
  )
-    INSERT INTO prescription( prescriptionId,issueDate,expireDate,madicineName,doctorRegNo,diseaseDetailId,recommandedTest)VALUE(" ?","? "," ?","? "," ?","? "," ?")
+    INSERT INTO prescription( prescriptionId,issueDate,expireDate,madicineName,doctorRegNo,diseaseDetailId,recommandedTest)VALUES(" ?","? "," ?","? "," ?","? "," ?")
 
   CREATE TABLE appointment (
     appId VARCHAR(15),
+    prescriptionId VARCHAR(15),
     appDate DATE, 
     appTime TIME,
     appStatus VARCHAR(100),
@@ -120,9 +121,10 @@ doctorRegNo VARCHAR(15) ,
    doctorRegNo VARCHAR(15),
     CONSTRAINT pk_appointment PRIMARY KEY (appId),
     CONSTRAINT fk_appointment_patient FOREIGN KEY(patientId) REFERENCES patient(patientId) ON DELETE CASCADE,
-     CONSTRAINT fk_appointment_doctor FOREIGN KEY(doctorRegNo) REFERENCES doctor (doctorRegNo) ON DELETE CASCADE )
- )
-  INSERT INTO appointment(appId,appDate,appTime,appStatus,patientId,doctorRegNo,prescriptionId)VALUE(" "," ");
+     CONSTRAINT fk_appointment_doctor FOREIGN KEY(doctorRegNo) REFERENCES doctor (doctorRegNo) ON DELETE CASCADE ,
+     CONSTRAINT fk_appointment_prescription FOREIGN KEY(prescriptionId) REFERENCES prescription (prescriptionId) ON DELETE CASCADE)
+ 
+  INSERT INTO appointment(appId,appDate,appTime,appStatus,patientId,doctorRegNo,prescriptionId)VALUES(" "," ");
 
  
   
@@ -135,7 +137,7 @@ doctorRegNo VARCHAR(15) ,
     CONSTRAINT pk_appSchedule PRIMARY KEY (appScheduleId),
     CONSTRAINT fk_appSchedule_doctor FOREIGN KEY(doctorRegNo) REFERENCES doctor(doctorRegNo) ON DELETE CASCADE
  )
- INSERT INTO appSchedule (appScheduleId,noOfAppointments,dateTimeIn,dateTimeOut,doctorRegNo)VALUE(" "," ");
+ INSERT INTO appSchedule (appScheduleId,noOfAppointments,dateTimeIn,dateTimeOut,doctorRegNo)VALUES(" "," ");
 
  CREATE TABLE currentState (
    prescriptionId VARCHAR(15), 
@@ -146,7 +148,7 @@ doctorRegNo VARCHAR(15) ,
     CONSTRAINT pk_currentStateDate PRIMARY KEY (currentStateDate),
     CONSTRAINT fk_currentState_prescription FOREIGN KEY(prescriptionId) REFERENCES prescription(prescriptionId) ON DELETE CASCADE
  )
- INSERT INTO medicine (madicineName, medicineNo)VALUE(" "," ");
+ INSERT INTO medicine (madicineName, medicineNo)VALUES(" "," ");
 
  CREATE TABLE payment(
     paymentId VARCHAR(50),

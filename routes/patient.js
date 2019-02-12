@@ -8,11 +8,10 @@ var randomstring = require("randomstring");
 
 router.post("/addPatient", function (req, res) {
 
-    var patientId = randomstring.generate(7);
+   
 
 
     const patientData = [
-        patientId,
         req.body.dob,
         req.body.occupation,
         req.body.bloodType,
@@ -39,8 +38,9 @@ router.post("/addPatient", function (req, res) {
 })
 
 router.post("/searchPatient",function(req,res,next){
-    const email  = req.body.email;
-
+    const email  = req.body.email.email;
+    console.log(email,"nbbbjjbj")
+  // console.log(req.body.email.email,"jhgjhgujgjugi")
     database.searchPatient(email,function(err,result){
         console.log(result);
         if(err){
@@ -52,8 +52,24 @@ router.post("/searchPatient",function(req,res,next){
     })
 })
 
-router.post("/profile",function(req,res){
+/* search patient for MLT */
+router.post("/searchPatientforMLT",function(req,res){
+   // const email  = req.body.email.email;
+    console.log("tttnnnn")
+  // console.log(req.body.email.email,"jhgjhgujgjugi")
+    database.searchPatientforMLT (email,function(err,result){
+        console.log(result);
+        if(err){
+            console.log(err);
+            res.json({success : false , massage : "Error something wrong"});
+        }else{
+            res.json({result})
+        }
+    })
+})
 
+router.post("/profile",function(req,res){
+    console.log("mmkmk")
     database.patientProfile(req.body.email,function(err,result){
         if(err){
             console.log(err);
