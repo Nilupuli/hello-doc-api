@@ -146,7 +146,7 @@ module.exports.addPayment = function(data, callback) {
 };
 
 module.exports.addCurrentState = function(data, callback) {
-  con.query(tableSchema.tables.currentSate.adduser, [[data]], callback);
+  con.query(tableSchema.tables.currentState.adduser, [[data]], callback);
 };
 
 module.exports.selectUser = function selectUser(username, callback) {
@@ -268,6 +268,34 @@ module.exports.viewAppointsments = function(docRegNo, callback) {
 module.exports.approveAppointment = function(appId, callback) {
   con.query(
     tableSchema.tables.appointment.approveappointment + mysql.escape(appId),
+    callback
+  );
+};
+
+module.exports.viewDocApp = function(docRegNo, email, callback) {
+  con.query(
+    `SELECT * FROM appointment a, users u, patient p, patientbasichealthinfo pb where u.NIC = p.NIC AND a.patientId = p.patientId AND p.patientId = pb.patientId AND u.email ='${email}' and a.doctorRegNo='${docRegNo}'`,
+    callback
+  );
+};
+
+module.exports.ViewPrescription = function(patientId, callback) {
+  con.query(
+    tableSchema.tables.Prescription.getUser + mysql.escape(patientId),
+    callback
+  );
+};
+
+module.exports.patientViewCurrentState = function(email, callback) {
+  con.query(
+    `SELECT * from Prescription pr, currentState c, users u, doctor d, appointment a WHERE pr.prescriptionId=c.prescriptionId AND pr.appId=a.appId AND pr.doctorRegNo=d.doctorRegNo AND d.NIC=u.NIC AND u.email='${email}'`,
+    callback
+  );
+};
+
+module.exports.doctorViewCurrentState = function(email, callback) {
+  con.query(
+    `SELECT * from Prescription pr, currentState c, users u, doctor d, appointment a WHERE pr.prescriptionId=c.prescriptionId AND pr.appId=a.appId AND pr.doctorRegNo=d.doctorRegNo AND d.NIC=u.NIC AND u.email='${email}'`,
     callback
   );
 };

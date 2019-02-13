@@ -150,30 +150,6 @@ const tables = {
     getMedicine: "SELECT * FROM Medicine where medicineName ="
   },
 
-  // Prescription: {
-  //   createTable:
-  //     "CREATE TABLE prescription (" +
-  //     "prescriptionId INT(11)," +
-  //     "issueDate DATE," +
-  //     "expireDate DATE," +
-  //     "doctorRegNo VARCHAR(15)," +
-  //     "diseaseDetailId INT(11)," +
-  //     "recommandedTest VARCHAR(200)," +
-  //     "medicineDosage VARCHAR(200)," +
-  //     "medicineQty VARCHAR(200)," +
-  //     "medicineId INT(11)," +
-  //     "CONSTRAINT pk_prescription PRIMARY KEY (prescriptionId)," +
-  //     "CONSTRAINT fk_prescription_doctorRegNo FOREIGN KEY(doctorRegNo) REFERENCES doctor(doctorRegNo)," +
-  //     "CONSTRAINT fk_prescription_diseasedetail FOREIGN KEY(diseaseDetailId) REFERENCES diseasedetail(diseaseDetailId)," +
-  //     "CONSTRAINT fk_prescription_medicine FOREIGN KEY(medicineId) REFERENCES Medicine(medicineId))",
-
-  //   addprescription:
-  //     "INSERT INTO Prescription(issueDate,expireDate,medicineDosage,doctorRegNo,recommandedTest,medicineQty,medicineNo,diseaseDetailId)VALUE?",
-  //   getUser: "SELECT * FROM prescription where ?",
-  //   getPatientMLT:
-  //     "SELECT * FROM users u, patient p, appointment a, Prescription pr WHERE u.NIC = p.NIC AND p.PatientId = a.PatientId AND a.prescriptionId = pr.prescriptionId WHERE email=?"
-  // },
-
   appSchedule: {
     createTable:
       "CREATE TABLE appSchedule (" +
@@ -210,22 +186,47 @@ const tables = {
       " INSERT INTO appointment(appDate,appTime,doctorRegNo,patientId)VALUE ?",
     getappointments: "SELECT * FROM appointment where doctorRegNo =",
     approveappointment: "UPDATE appointment SET appStatus = 1 where appId = "
+  },
+
+  Prescription: {
+    createTable:
+      "CREATE TABLE prescription (" +
+      "prescriptionId INT(11)," +
+      "issueDate DATE," +
+      "expireDate DATE," +
+      "doctorRegNo VARCHAR(15)," +
+      "diseaseDetailId INT(11)," +
+      "recommandedTest VARCHAR(200)," +
+      "medicineDosage VARCHAR(200)," +
+      "medicineQty VARCHAR(200)," +
+      "medicineId INT(11)," +
+      "CONSTRAINT pk_prescription PRIMARY KEY (prescriptionId)," +
+      "CONSTRAINT fk_prescription_doctorRegNo FOREIGN KEY(doctorRegNo) REFERENCES doctor(doctorRegNo)," +
+      "CONSTRAINT fk_prescription_diseasedetail FOREIGN KEY(diseaseDetailId) REFERENCES diseasedetail(diseaseDetailId)," +
+      "CONSTRAINT fk_prescription_medicine FOREIGN KEY(medicineId) REFERENCES Medicine(medicineId))",
+
+    addprescription:
+      "INSERT INTO Prescription(appId,issueDate,expireDate,medicineDosage,doctorRegNo,recommandedTest,medicineQty,medicineNo,diseaseDetailId)VALUE?",
+    getUser:
+      "select * from Prescription p, appointment a WHERE p.appId=a.appId AND a.patientId=  ",
+    getPatientMLT:
+      "SELECT * FROM users u, patient p, appointment a, Prescription pr WHERE u.NIC = p.NIC AND p.PatientId = a.PatientId AND a.prescriptionId = pr.prescriptionId WHERE email=?"
+  },
+
+  currentState: {
+    createTable:
+      "CREATE TABLE currentState (" +
+      "prescriptionId int(11), " +
+      "duration INT(10), " +
+      "currentStateDate varchar(50)," +
+      "state VARCHAR(100)," +
+      "comment varchar(200), " +
+      "CONSTRAINT pk_currentStateDate PRIMARY KEY (currentStateDate), " +
+      "CONSTRAINT fk_currentState_prescription FOREIGN KEY(prescriptionId) REFERENCES Prescription(prescriptionId))",
+
+    adduser:
+      "INSERT INTO currentState (prescriptionId,duration,currentStateDate,state,comment)VALUE?"
   }
-
-  //   currentState: {
-  //     createTable:
-  //       "CREATE TABLE currentState (" +
-  //       "prescriptionId VARCHAR(15), " +
-  //       " duration INT(10)," +
-  //       " currentStateDate DATE," +
-  //       " state VARCHAR(100)," +
-  //       "comment VALUE(200)," +
-  //       " CONSTRAINT pk_currentStateDate PRIMARY KEY (currentStateDate)," +
-  //       " CONSTRAINT fk_currentState_prescription FOREIGN KEY(prescriptionId) REFERENCES prescription(prescriptionId) ON DELETE CASCADE)",
-
-  //     adduser:
-  //       "INSERT INTO currentState (prescriptionId,duration,currentStateDate,state,comment)VALUE?"
-  //   },
 
   //   payment: {
   //     createTable:
@@ -260,8 +261,9 @@ module.exports.tablesname = [
   "patientbasichealthinfo",
   "diseasedetail",
   "Medicine",
-  "appointment"
-  // "Prescription"
+  "appointment",
+  "Prescription",
+  "currentState"
 
   // "labreport",
 ];

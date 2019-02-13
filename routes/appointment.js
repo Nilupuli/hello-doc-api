@@ -14,7 +14,7 @@ router.post("/addAppointment", function(req, res) {
 
   database.patientProfile(req.body.email, function(err, result) {
     if (err) {
-      console.log(email);
+      console.log(err);
       return;
     } else {
       //console.log(result[0].patientId);
@@ -63,6 +63,31 @@ router.get("/approveappointment/:appId", function(req, res) {
       console.log(err);
     } else {
       res.send({ state: true });
+    }
+  });
+});
+
+router.get("/viewdocappointsments/:docemail/:patientemail", function(req, res) {
+  var docEmail = req.params.docemail;
+  var patientemail = req.params.patientemail;
+
+  database.doctorProfile(docEmail, function(err, result) {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      console.log(result);
+      database.viewDocApp(result[0].doctorRegNo, patientemail, function(
+        err,
+        result2
+      ) {
+        if (err) {
+          console.log(err);
+          return;
+        } else {
+          res.json({ data: result2 });
+        }
+      });
     }
   });
 });

@@ -8,6 +8,7 @@ var randomstring = require("randomstring");
 
 router.post("/addPrescription", function(req, res) {
   const prescriptionData = [
+    req.body.appId,
     req.body.issueDate,
     req.body.expireDate,
     req.body.medicineDosage,
@@ -78,7 +79,7 @@ router.post("/addPrescription", function(req, res) {
                                 });
                                 return;
                               } else {
-                                res.send({ status: true });
+                                res.send({ status: true, data: result4 });
                               }
                             });
                           }
@@ -120,7 +121,7 @@ router.post("/addPrescription", function(req, res) {
                   // });
                   database.addPrescription(prescriptionData, function(
                     err,
-                    result
+                    result3
                   ) {
                     // console.log(prescriptionData,"scs");
                     if (err) {
@@ -128,7 +129,7 @@ router.post("/addPrescription", function(req, res) {
                       res.send({ status: false, data: "docreg no error" });
                       return;
                     } else {
-                      res.send({ status: true });
+                      res.send({ status: true, data: result3 });
                     }
                   });
                 }
@@ -155,6 +156,26 @@ router.post("/addPrescription", function(req, res) {
   //         res.json({ success: true, msg: "Prescription added" });
   //     }
   // });
+});
+
+router.get("/viewprescription/:patientemail", function(req, res) {
+  var patientEmail = req.params.patientemail;
+  // console.log(req);
+
+  database.patientProfile(patientEmail, function(err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(result[0].patientId);
+      database.ViewPrescription(result[0].patientId, function(err, result1) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json({ data: result1 });
+        }
+      });
+    }
+  });
 });
 
 module.exports = router;
